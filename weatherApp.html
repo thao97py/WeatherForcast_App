@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather Forcast App</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="weatherApp.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+           // 0e176856adf04db0abf0948a12810c30
+            $('form').submit(function(){
+                var keyAPI = '0e176856adf04db0abf0948a12810c30';
+                var location = $('input[name="city"]').val();
+                $.get('https://api.openweathermap.org/data/2.5/weather?q='+location+'&&appid='+ keyAPI,function(response){
+                    var fahrenheit = "";
+                    console.log(response);
+                    fahrenheit +='<h1>'+response.name+'</h1>';
+                    fahrenheit += '<p> Avraged Temperature: ' + response.main.temp +'F with Heightest: ' + response.main.temp_max + 'F and Lowest: '+ response.main.temp_min+'F</p>';
+                    fahrenheit += '<p>Pressure: '+ response.main.pressure + ' and Humidity: '+ response.main.humidity+'</p>';
+                    fahrenheit += '<p>Weather looks like: </p><ul>';
+                    for ( var k=0; k<response.weather.length;k++){
+                        fahrenheit += '<li>'+response.weather[k].main +': '+ response.weather[k].description +' '+ response.weather[k].icon +'</li>';
+                    }
+                    fahrenheit += '</ul><p>Wind Speed: '+ response.wind.speed+' m/h</p>';
+                    fahrenheit += '<p>Rain: ${response["rain"]["3h"]}</p>';
+                    fahrenheit += '<p>Location Coordinates: Longitude:  ' + response.coord.lon+ ' and Attitude: ' +response.coord.lat +'</p>';
+                     $('.result').html(fahrenheit);
+                    }, 'json' );
+
+                $('input[name="city"]').val("");
+                return false;
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="search">
+            <h1>Weather Forcast App</h1>
+            <p>Type in the name of a city you want to forcast!</p>
+            <form action="process.php" method="POST">
+                <input type="text" name="city" placeholder="City..." > 
+                <input type="submit" name="Search Weather" id="submit">
+            </form>
+        </div>
+        
+        <div class="result">
+
+        </div>
+    </div>
+</body>
+</html>

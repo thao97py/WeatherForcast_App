@@ -1,0 +1,24 @@
+*{
+    padding:0px;
+    margin:0px;    
+}
+.wrapper{
+    margin-left:500px;
+    
+}
+ul{
+    margin:auto;
+    color:red;
+}
+.search{
+    margin:2%;
+}
+h1{
+    margin:3%;
+}
+.form{
+    margin-top:20px;
+}
+p{
+    padding:10px;
+}
